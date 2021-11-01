@@ -2,3 +2,6 @@ env/
 redacted/
 .tox/
 redactor2.egg-info/
+myrules.conf
+test/
+.DS_Store
