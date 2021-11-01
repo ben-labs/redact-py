@@ -1,2 +1,4 @@
 env/
 redacted/
+.tox/
+redactor2.egg-info/
