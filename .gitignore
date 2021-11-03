@@ -3,5 +3,8 @@ redacted/
 .tox/
 redactor2.egg-info/
 myrules.conf
-test/
+testdata/
 .DS_Store
+__pycache__
+.pytest_cache/
+*.pyc
