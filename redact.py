@@ -13,10 +13,6 @@ if __name__ == '__main__':
     parser.add_argument('filename', help='Logfile to process')
     parser.add_argument('-r', '--rulefile', help='Ruleset file')
     parser.add_argument('-o', '--outpath', help="Output file path")
-    # parser.add_argument('-f', '--filter',
-    #                     help="Output only redacted items", action='store_true')
-    # parser.add_argument('-e', '--export',
-    #                     help="Export without redacting", action="store_true")
     args = parser.parse_args()
 
     # check if file is there
