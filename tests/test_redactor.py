@@ -1,15 +1,22 @@
-import unittest
+import pytest
 from redactor.redactor import Redactor
-class TestRedactor(unittest.TestCase):
-    def setUp(self) -> None:
-        self.obj = Redactor()
-        return super().setUp()
-    
-    def test_check_file_type(self):
-        testfile = __file__
-        self.assertEqual(self.obj.check_file_type(testfile), 'text/x-python', "Not an allowed file")
 
-    def test_allowed_types(self):
-        ary = self.obj.get_allowed_files()
-        self.assertEqual(len(ary), 10, "Testing expected amount of allowed files")
-        self.assertTrue(self.obj.allowed_file(__file__), "test_allowed_types failed")
+@pytest.fixture
+def obj():
+    return Redactor()
+
+
+def test_check_python_file(obj):
+    assert obj.check_file_type(__file__) == 'text/x-python', 'Failed python file check'
+
+
+def test_check_text_type(obj):
+    assert obj.check_file_type('dev-requirements.txt') == 'text/plain', 'Failed text file check'
+
+
+def test_number_of_allowed_types(obj):
+    assert len(obj.get_allowed_files()) == 10, 'Number of allowed tests does not match expected'
+
+
+def test_number_of_allowed_types(obj):
+    assert obj.allowed_file(__file__), f'{__file__} should be allowed'
