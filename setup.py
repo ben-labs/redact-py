@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 try:
     from setuptools import setup
 except ImportError:
@@ -14,18 +13,17 @@ for scheme in INSTALL_SCHEMES.values():
 with open('README.md') as fp:
     DESCRIPTION = fp.read()
 
-with open('requirements.txt') as fp:
-    REQUIRED = fp.read()
+# with open('requirements.txt') as fp:
+#     REQUIRED = fp.read()
 
 setup(
     name='redactor2',
     version='0.1.0',
-    install_requires=REQUIRED,
     description=DESCRIPTION,
     author='Ben Quek',
     author_email='ben.quek@ben-labs.net',
     maintainer='Ben Quek',
     maintainer_email='ben.quek@ben-labs.net',
     url='https://github.com/ben-labs/redact-py',
-    py_modules=['redact']
+    py_modules=['redact', 'redactor.redactor']
 )
