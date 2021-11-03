@@ -7,7 +7,11 @@ import re
 
 
 class Redactor:
-    ''' Redactor class - Class containing all methods to support redaction of sensitive data '''
+    '''Redactor class
+
+    Class containing all methods to support redaction
+    of sensitive data
+    '''
 
     def __init__(self, rulefile=None) -> None:
         '''Class Initialization
@@ -26,7 +30,7 @@ class Redactor:
 
     def check_file_type(self, file):
         '''Checks for the supplied file type
-        
+
         Args:
             file (str): Filename of file to check
 
@@ -43,7 +47,7 @@ class Redactor:
         Sets allowed_files with list of allowed file types read
         from allowed_types.dat
 
-        Args: 
+        Args:
             None
 
         Returns:
@@ -55,7 +59,7 @@ class Redactor:
     def get_allowed_files(self):
         '''Gets a list of allowed files
 
-        Args: 
+        Args:
             None
 
         Returns:
@@ -87,7 +91,7 @@ class Redactor:
 
         Args:
             ruleFile (str): Custom rule file to be loaded
-        
+
         Returns:
             None
         '''
@@ -130,7 +134,7 @@ class Redactor:
                 print("[ + ] Processing starts now. This may take some time "
                       "depending on the file size. Monitor the redacted file "
                       "size to monitor progress")
-                      
+
                 # Open a file write pointer w
                 with open(f"{filepath}redacted_{os.path.basename(filename)}",
                           'w',
