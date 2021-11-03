@@ -18,5 +18,5 @@ def test_number_of_allowed_types(obj):
     assert len(obj.get_allowed_files()) == 10, 'Number of allowed tests does not match expected'
 
 
-def test_number_of_allowed_types(obj):
+def test_current_file_is_allowed(obj):
     assert obj.allowed_file(__file__), f'{__file__} should be allowed'
