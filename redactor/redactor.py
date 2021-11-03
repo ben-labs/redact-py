@@ -115,6 +115,7 @@ class Redactor:
         redact_count = 0
         start = time.time()
         try:
+            # Open a file read pointer fP
             with open(filename, encoding="utf-8") as fP:
                 # Check the format of the output directory
                 if filepath != './' and filepath[-1] != '/':
@@ -129,6 +130,8 @@ class Redactor:
                 print("[ + ] Processing starts now. This may take some time "
                       "depending on the file size. Monitor the redacted file "
                       "size to monitor progress")
+                      
+                # Open a file write pointer w
                 with open(f"{filepath}redacted_{os.path.basename(filename)}",
                           'w',
                           encoding="utf-8") as w:
