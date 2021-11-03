@@ -22,7 +22,19 @@ class Redactor:
         Returns:
             None
         '''
-        self.__load_allowed_files__()
+        self.allowed_files = [
+            'text/plain',
+            'text/x-python',
+            'application/json',
+            'application/javascript',
+            'text/html',
+            'text/csv',
+            'text/tab-separated-values',
+            'text/css',
+            'text/cache-manifest',
+            'text/calendar'
+        ]
+
         if rulefile is None:
             self.__read_rules__()
         else:
@@ -40,21 +52,6 @@ class Redactor:
         if not os.path.isfile(file):
             return (None, None)
         return mimetypes.guess_type(file)[0]
-
-    def __load_allowed_files__(self):
-        '''Helper function to load pre-defined allowed files
-
-        Sets allowed_files with list of allowed file types read
-        from allowed_types.dat
-
-        Args:
-            None
-
-        Returns:
-            None
-        '''
-        with open('redactor/allowed_types.dat', encoding="utf-8") as fp:
-            self.allowed_files = fp.read().split('\n')
 
     def get_allowed_files(self):
         '''Gets a list of allowed files
