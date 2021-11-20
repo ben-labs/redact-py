@@ -124,8 +124,7 @@ class Redactor:
 
                 # created the directory if not there
                 if not os.path.exists(os.path.dirname(savepath)):
-                    print("[ + ] " + os.path.dirname(savepath) +
-                          " directory does not exist... Creating it")
+                    print("[ + ] " + os.path.dirname(savepath) + " directory does not exist... Creating it")
                     os.makedirs(os.path.dirname(savepath))
 
                 print("[ + ] Processing starts now. This may take some time "
@@ -160,7 +159,7 @@ class Redactor:
 
 class Search(Redactor):
     '''Search Class
-    
+
     Class that is a subclass of Redactor.
     Used to search for files that have items found in the rule files
     '''
@@ -182,7 +181,7 @@ class Search(Redactor):
         start = time.time()
 
         for dirpath, dirnames, filenames in os.walk(path):
-            for name in filenames:                
+            for name in filenames:
                 if self.allowed_file(os.path.join(dirpath, name)):
                     filename = os.path.join(dirpath, name)
                     try:
@@ -194,12 +193,11 @@ class Search(Redactor):
 
                             # created the directory if not there
                             if not os.path.exists(os.path.dirname(savepath)):
-                                print("[ + ] " + os.path.dirname(savepath) +
-                                    " directory does not exist... Creating it")
+                                print("[ + ] " + os.path.dirname(savepath) + " directory does not exist... Creating it")
                                 os.makedirs(os.path.dirname(savepath))
 
                             print(f"[ + ] Processing {name} now.")
-                            
+
                             linepos = 0
                             for line in fP:
                                 linepos = linepos + 1
@@ -207,8 +205,8 @@ class Search(Redactor):
                                     if re.search(p['pattern'], line, re.IGNORECASE):
                                         # Open a file write pointer w
                                         with open(f"{savepath}found_{os.path.basename(filename)}",
-                                                'a',
-                                                encoding="utf-8") as w:
+                                                  'a',
+                                                  encoding="utf-8") as w:
                                             w.write(f'[ Line {str(linepos).rjust(10)} ]   : {line}')
                                         redact_count = redact_count + 1
 
@@ -218,7 +216,6 @@ class Search(Redactor):
                         os.remove(f"{savepath}found_{os.path.basename(filename)}")
                         print("[ - ] Removed incomplete redact file")
                         sys.exit("[ - ] Unable to read file")
-
 
         end = time.time()
         print()
