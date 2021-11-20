@@ -8,7 +8,8 @@ import os
 
 from redactor.redactor import Redactor
 
-if __name__ == '__main__':
+
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('filename', help='Logfile to process')
     parser.add_argument('-r', '--rulefile', help='Ruleset file')
@@ -29,3 +30,7 @@ if __name__ == '__main__':
         redObj.execute(args.filename, args.outpath)
     else:
         redObj.execute(args.filename)
+
+
+if __name__ == '__main__':
+    main()

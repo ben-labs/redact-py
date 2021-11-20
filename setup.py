@@ -5,7 +5,6 @@ except ImportError:
     from distutils.core import setup
 from glob import glob
 
-# Make data go into site-packages (http://tinyurl.com/site-pkg)
 from distutils.command.install import INSTALL_SCHEMES
 for scheme in INSTALL_SCHEMES.values():
     scheme['data'] = scheme['purelib']
@@ -25,5 +24,9 @@ setup(
     maintainer='Ben Quek',
     maintainer_email='ben.quek@ben-labs.net',
     url='https://github.com/ben-labs/redact-py',
-    py_modules=['redact', 'redactor.redactor']
+    py_modules=['redact', 'redactor.redactor'],
+    entry_points='''
+        [console_scripts]
+        redactor=redact:main
+    '''
 )
