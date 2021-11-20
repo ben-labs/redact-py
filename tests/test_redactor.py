@@ -1,6 +1,7 @@
 import pytest
 from redactor.redactor import Redactor
 
+
 @pytest.fixture
 def obj():
     return Redactor()
