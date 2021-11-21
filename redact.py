@@ -10,6 +10,8 @@ from redactor.redactor import Redactor
 
 
 def main():
+    '''Main calling function for cli
+    '''
     parser = argparse.ArgumentParser()
     parser.add_argument('filename', help='Logfile to process')
     parser.add_argument('-r', '--rulefile', help='Ruleset file')
@@ -22,14 +24,14 @@ def main():
 
     # redact file
     if args.rulefile:
-        redObj = Redactor(args.rulefile)
+        red_obj = Redactor(args.rulefile)
     else:
-        redObj = Redactor()
+        red_obj = Redactor()
 
     if args.outpath:
-        redObj.execute(args.filename, args.outpath)
+        red_obj.execute(args.filename, args.outpath)
     else:
-        redObj.execute(args.filename)
+        red_obj.execute(args.filename)
 
 
 if __name__ == '__main__':

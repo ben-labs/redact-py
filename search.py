@@ -3,7 +3,6 @@
 Utility to search for files with contents to be redacted
 '''
 import argparse
-import sys
 import os
 
 from redactor.redactor import Search
