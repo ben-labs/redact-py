@@ -49,6 +49,7 @@
 2. ![Basic Redaction](/images/basic_redact.png "Basic Redaction")
 
 Sample Result:
+
 ![Sample](/images/sample.png "Sample")
 
 ## Rule files
