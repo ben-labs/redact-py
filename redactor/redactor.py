@@ -84,7 +84,7 @@ class Redactor:
         return mimetypes.guess_type(file)[0] in self.get_allowed_files()
 
     @staticmethod
-    def __read_rules(rule_file='default_rules.conf'):
+    def __read_rules(rule_file=os.path.dirname(os.path.abspath(__file__)) + '/../redactor_config/default_rules.conf'):
         '''Load Rules
 
         Loads either a default ruleset or a self defined ruleset.

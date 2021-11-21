@@ -17,7 +17,7 @@ with open('README.md') as fp:
 
 setup(
     name='redactor2',
-    version='0.1.0',
+    version='1.0.0',
     description=DESCRIPTION,
     author='Ben Quek',
     author_email='ben.quek@ben-labs.net',
@@ -25,6 +25,7 @@ setup(
     maintainer_email='ben.quek@ben-labs.net',
     url='https://github.com/ben-labs/redact-py',
     py_modules=['redact', 'redactor.redactor'],
+    data_files=[('redactor_config', ['default_rules.conf'])],
     entry_points='''
         [console_scripts]
         redactor=redact:main
