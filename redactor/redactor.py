@@ -1,3 +1,5 @@
+'''Main redactor library
+'''
 import os
 import mimetypes
 import json
@@ -36,11 +38,12 @@ class Redactor:
         ]
 
         if rulefile is None:
-            self.__read_rules__()
+            self.patterns = self.__read_rules()
         else:
-            self.__read_rules__(rulefile)
+            self.patterns = self.__read_rules(rulefile)
 
-    def check_file_type(self, file):
+    @staticmethod
+    def check_file_type(file):
         '''Checks for the supplied file type
 
         Args:
@@ -80,7 +83,8 @@ class Redactor:
             return False
         return mimetypes.guess_type(file)[0] in self.get_allowed_files()
 
-    def __read_rules__(self, ruleFile='default_rules.conf'):
+    @staticmethod
+    def __read_rules(rule_file='default_rules.conf'):
         '''Load Rules
 
         Loads either a default ruleset or a self defined ruleset.
@@ -90,11 +94,11 @@ class Redactor:
             ruleFile (str): Custom rule file to be loaded
 
         Returns:
-            None
+            json
         '''
         try:
-            with open(ruleFile) as fP:
-                self.patterns = json.load(fP)
+            with open(rule_file, encoding="utf-8") as rulefile:
+                return json.load(rulefile)
         except FileNotFoundError:
             sys.exit("[ - ] Rule file was not found")
         except json.JSONDecodeError:
@@ -117,7 +121,7 @@ class Redactor:
         start = time.time()
         try:
             # Open a file read pointer fP
-            with open(filename, encoding="utf-8") as fP:
+            with open(filename, encoding="utf-8") as target_file:
                 # Check the format of the output directory
                 if savepath != './' and savepath[-1] != '/':
                     savepath = savepath + '/'
@@ -131,25 +135,25 @@ class Redactor:
                       "depending on the file size. Monitor the redacted file "
                       "size to monitor progress")
 
-                # Open a file write pointer w
+                # Open a file write pointer result
                 with open(f"{savepath}redacted_{os.path.basename(filename)}",
                           'w',
-                          encoding="utf-8") as w:
-                    for line in fP:
-                        for p in self.patterns:
-                            if re.search(p['pattern'], line, re.IGNORECASE):
-                                line = re.sub(p['pattern'], p['mask'], line,
+                          encoding="utf-8") as result:
+                    for line in target_file:
+                        for pat in self.patterns:
+                            if re.search(pat['pattern'], line, re.IGNORECASE):
+                                line = re.sub(pat['pattern'], pat['mask'], line,
                                               flags=re.IGNORECASE)
                                 redact_count = redact_count + 1
 
-                        w.write(line)
+                        result.write(line)
                         count = count + 1
             end = time.time()
             print()
             print(f"[ + ] Processed {count} records...")
             print(f"[ + ] Redacted {redact_count} targets...")
-            tt = end - start
-            print(f'[ + ] Took {tt} seconds to execute')
+            time_taken = end - start
+            print(f'[ + ] Took {time_taken} seconds to execute')
         except UnicodeDecodeError:
             # remove the created file
             os.remove(f"{savepath}redacted_{os.path.basename(filename)}")
@@ -163,7 +167,7 @@ class Search(Redactor):
     Class that is a subclass of Redactor.
     Used to search for files that have items found in the rule files
     '''
-    def execute(self, path, savepath='./'):
+    def execute(self, filename, savepath='./'):
         '''Search function
 
         Main function to search a path for files that match what is stored in the rule file
@@ -176,6 +180,7 @@ class Search(Redactor):
             None
         '''
 
+        path = filename
         count = 0
         redact_count = 0
         start = time.time()
@@ -186,7 +191,7 @@ class Search(Redactor):
                     filename = os.path.join(dirpath, name)
                     try:
                         # Open a file read pointer fP
-                        with open(filename, encoding="utf-8") as fP:
+                        with open(filename, encoding="utf-8") as target_file:
                             # Check the format of the output directory
                             if savepath != './' and savepath[-1] != '/':
                                 savepath = savepath + '/'
@@ -199,15 +204,15 @@ class Search(Redactor):
                             print(f"[ + ] Processing {name} now.")
 
                             linepos = 0
-                            for line in fP:
+                            for line in target_file:
                                 linepos = linepos + 1
-                                for p in self.patterns:
-                                    if re.search(p['pattern'], line, re.IGNORECASE):
+                                for pat in self.patterns:
+                                    if re.search(pat['pattern'], line, re.IGNORECASE):
                                         # Open a file write pointer w
                                         with open(f"{savepath}found_{os.path.basename(filename)}",
                                                   'a',
-                                                  encoding="utf-8") as w:
-                                            w.write(f'[ Line {str(linepos).rjust(10)} ]   : {line}')
+                                                  encoding="utf-8") as result_file:
+                                            result_file.write(f'[ Line {str(linepos).rjust(10)} ]   : {line}')
                                         redact_count = redact_count + 1
 
                                 count = count + 1
@@ -221,5 +226,5 @@ class Search(Redactor):
         print()
         print(f"[ + ] Processed {count} records...")
         print(f"[ + ] Found {redact_count} targets...")
-        tt = end - start
-        print(f'[ + ] Took {tt} seconds to execute')
+        time_taken = end - start
+        print(f'[ + ] Took {time_taken} seconds to execute')
