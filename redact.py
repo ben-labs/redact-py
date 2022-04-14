@@ -28,11 +28,10 @@ def main():
     for path in full_paths:
         if os.path.isfile(path):
             file_name, file_ext = os.path.splitext(path)
-            if args.extension == '' or args.extension == file_ext:
+            if args.extension in ('',file_ext):
                 files.add(path)
-        else:
-            if (args.subfolders):
-                full_paths += glob.glob(path + '/*')
+        elif (args.subfolders):
+            full_paths += glob.glob(path + '/*')
 
     # redact file
 
